@@ -36,11 +36,12 @@ def download_data(args):
   for offset in range(args.start, args.end, OFFSET_STEP):
     if count % PRINT_INTERVAL == 0:
       flush('downloaded %d files' % count)
-    subdir = '%05d' % (count / args.files_per_folder)
+    count += 1
+
+    subdir = '%05d' % (offset / OFFSET_STEP / args.files_per_folder)
     output_dir = '%s/%s' % (args.output_dir, subdir)
     if not os.path.isdir(output_dir):
       os.mkdir(output_dir)
-    count += 1
 
     output_file = '%s/offset-%d.json' % (output_dir, offset)
     if os.path.isfile(output_file) and not args.overwrite:
